@@ -2,57 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".NoteFragment">
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/higtEditName"
-        />
+        android:hint="@string/higtEditName" />
+
     <EditText
         android:id="@+id/editDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/higtEditDescription"
-        />
+        android:hint="@string/higtEditDescription" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <Space
-            android:layout_width="@dimen/sizeSpace"
-            android:layout_height="wrap_content"/>
+
         <Button
             android:id="@+id/deleteNote"
             android:layout_width="@dimen/widthZero"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/btnDelete"
-            android:textStyle="italic"/>
-        <!--   <Button
-               android:id="@+id/saveNote"
-               android:layout_width="@dimen/widthZero"
-               android:layout_weight="1"
-               android:layout_height="wrap_content"
-               android:text="@string/btnSave"
-               android:textStyle="italic"/>-->
-        <Space
-            android:layout_width="@dimen/sizeSpace"
-            android:layout_height="wrap_content"/>
+            android:textStyle="italic" />
+
+
         <Button
             android:id="@+id/addNote"
             android:layout_width="@dimen/widthZero"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/btnAdd"
-            android:textStyle="italic"/>
-        <Space
-            android:layout_width="@dimen/sizeSpace"
-            android:layout_height="wrap_content"/>
+            android:textStyle="italic" />
+
     </LinearLayout>
 
 
@@ -60,6 +48,6 @@
         android:id="@+id/recyclerViewContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item"/>
+        tools:listitem="@layout/item" />
 
 </LinearLayout>
