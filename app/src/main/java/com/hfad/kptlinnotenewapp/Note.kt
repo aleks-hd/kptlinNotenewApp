@@ -4,7 +4,15 @@ package com.hfad.kptlinnotenewapp
 import android.os.Parcel
 import android.os.Parcelable
 
-class Note(title: String, description: String):Parcelable {
+
+public class Note():Parcelable {
+     var title1:String = "pop"
+    var description1:String = "opis"
+
+    constructor(title: String, description: String) : this()
+    { title1 = title
+    description1 = description}
+
     constructor(parcel: Parcel) : this(
         TODO("title"),
         TODO("description")
@@ -28,5 +36,7 @@ class Note(title: String, description: String):Parcelable {
             return arrayOfNulls(size)
         }
     }
+
+
 
 }
