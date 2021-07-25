@@ -5,7 +5,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 
-public class Note():Parcelable {
+class Note():Parcelable {
      var title1:String = "pop"
     var description1:String = "opis"
 

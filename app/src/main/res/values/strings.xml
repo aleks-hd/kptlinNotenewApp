@@ -16,4 +16,19 @@
     <string name="messageAllert">Вы действительно хотите удалить заметку ?</string>
     <string name="button">Да</string>
     <string name="buttonoff">Нет</string>
+
+    <string-array name="Arraytitle">
+        <item>Заметка 1</item>
+        <item>Заметка 2</item>
+        <item>Заметка 3</item>
+        <item>Заметка 4</item>
+    </string-array>
+
+    <string-array name="ArrayDescr">
+        <item>Описание заметки1</item>
+        <item>Описание заметки2</item>
+        <item>Описание заметки3</item>
+        <item>Описание заметки4</item>
+    </string-array>
+
 </resources>
