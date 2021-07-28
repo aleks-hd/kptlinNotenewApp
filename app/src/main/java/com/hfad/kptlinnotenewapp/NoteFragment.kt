@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hfad.kptlinnotenewapp.AdapterNote.OnItemClickListener
 
 
 private const val ARG_PARAM1 = "param1"
@@ -22,8 +23,8 @@ class NoteFragment : Fragment() {
     lateinit var clearBtn: Button
     lateinit var addBtnNote: Button
     lateinit var arrayList: ArrayList<Note>
-    lateinit var adapternotes:AdapterNote
-    lateinit var recyclerView:RecyclerView
+    lateinit var adapternotes: AdapterNote
+    lateinit var recyclerView: RecyclerView
     private var param1: String? = null
     private var param2: String? = null
 
@@ -60,9 +61,15 @@ class NoteFragment : Fragment() {
         recyclerView.layoutManager = linearLayoutManager
         var adapterNote = AdapterNote(arrayList)
         recyclerView.adapter = adapterNote
+       adapterNote.SetOnClickListener(object : AdapterNote.OnItemClickListener{
+           override fun onItemClick(position: Int) {
+               Log.d("click", "вы нажали на item")
+           }
 
+       });
 
     }
+
 
 
     private fun initListenerBnt(view: View?) {
