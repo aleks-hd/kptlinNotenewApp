@@ -6,14 +6,22 @@ import android.os.Parcelable
 
 
 class Note():Parcelable {
+    var id:String? = null
      var title1:String = "pop"
     var description1:String = "opis"
 
-    constructor(title: String, description: String) : this()
-    { title1 = title
+    constructor(title: String, description:String) : this()
+    {
+        title1 = title
+        description1 = description}
+
+    constructor(id:String, title: String, description:String) : this()
+    {   this.id = id
+        title1 = title
     description1 = description}
 
     constructor(parcel: Parcel) : this(
+        TODO("id"),
         TODO("title"),
         TODO("description")
     ) {

@@ -10,7 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hfad.kptlinnotenewapp.AdapterNote.OnItemClickListener
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
 
 
 private const val ARG_PARAM1 = "param1"
@@ -23,11 +25,14 @@ class NoteFragment : Fragment() {
     lateinit var clearBtn: Button
     lateinit var addBtnNote: Button
     lateinit var arrayList: ArrayList<Note>
-    lateinit var adapternotes: AdapterNote
+    lateinit var adapterNote: AdapterNote
     lateinit var recyclerView: RecyclerView
     private var param1: String? = null
     private var param2: String? = null
+    val db = Firebase.firestore
+    val NOTE_COLLECTION:String = "NewCOllections"
 
+    val collectionReference = db.collection(NOTE_COLLECTION)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -55,21 +60,82 @@ class NoteFragment : Fragment() {
 
     private fun initRecyclerView(recyclerView: RecyclerView) {
         recyclerView.setHasFixedSize(true)
-        getNoteData();
+        //Данные с ресурсов пока отключили
+       // getNoteData();
+        //получение списка с БД
+        getNoteDataDatabase()
+        //Надо дождаться выполнения этой задачи (как по другому пока не знаю)
+        Thread.sleep(3000)
         val linearLayoutManager = LinearLayoutManager(this.context)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerView.layoutManager = linearLayoutManager
-        var adapterNote = AdapterNote(arrayList)
+         adapterNote = AdapterNote(arrayList)
         recyclerView.adapter = adapterNote
        adapterNote.SetOnClickListener(object : AdapterNote.OnItemClickListener{
            override fun onItemClick(position: Int) {
                Log.d("click", "вы нажали на item")
-           }
+               deleteItem(position)
+}
 
        });
-
+        initInputDate()
     }
 
+    private fun deleteItem(position: Int) {
+        collectionReference.document(arrayList.get(position).id.toString()).delete()
+            .addOnSuccessListener { Log.d("DATABASE DELETE POSITION", "Данные были успегно удалены") }
+            .addOnFailureListener{Log.d("DATABASE DELETE POSITION", "Ошибка удаления из базы данных")}
+
+        arrayList.remove(arrayList.get(position))
+        adapterNote.notifyDataSetChanged()
+    }
+
+    //получение списка заметок с базы данных
+    private fun getNoteDataDatabase():ArrayList<Note> {
+    arrayList = ArrayList<Note>()
+    val mapping:NoteDataMapping = NoteDataMapping()
+    collectionReference.get()
+            .addOnSuccessListener { result->
+                for (document in result){
+                   val notenew = Note(document.id,document.get(mapping.qwe.NAME).toString(),document.get(mapping.qwe.DESCRIPTION).toString())
+                    arrayList.add(notenew)
+                    Log.d("READ NOTE", "Данные успешно считаны")
+                }
+            }
+        .addOnFailureListener{exception ->
+            Log.w("READ DATABASE", "Ошибка чтения из базы данных", exception)}
+
+    return arrayList;
+    }
+
+    //инициализация слушателя addDate
+    fun initInputDate():Unit{
+        addBtnNote.setOnClickListener(View.OnClickListener {
+            Log.d("ADD NOTE", "слушатель OK")
+            enterEditTextView()
+        })
+    }
+
+//метод получения данных с полей ввода
+    fun enterEditTextView():Unit{
+        val nameInput = name.text.toString()
+        val descriptionInput = description.text.toString()
+        val noteInputDate = Note(nameInput,descriptionInput)
+        arrayList.add(noteInputDate)
+        addDate(noteInputDate)
+        adapterNote.notifyDataSetChanged()
+    }
+
+
+   //метод добавления данных в бд
+        fun addDate(note:Note){
+            val mapping:NoteDataMapping = NoteDataMapping()
+
+            collectionReference.add(mapping.toDocument(note))
+                .addOnSuccessListener { collectionReference->
+                    Log.d("DataBase ADD", "Запись успешно добавлена")}
+                .addOnFailureListener{e-> Log.w("Error Add Date", "Ошибка добавления данных",e)}
+        }
 
 
     private fun initListenerBnt(view: View?) {
@@ -107,7 +173,7 @@ class NoteFragment : Fragment() {
         for (i in arrayTitle.indices) run {
             var title: String = arrayTitle[i]
             var description: String = arrayDescription[i]
-            var note: Note = Note(title, description)
+            var note = Note(title, description)
             arrayList.add(note)
 
         }

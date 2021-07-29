@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 
 import androidx.recyclerview.widget.RecyclerView
 
@@ -30,9 +31,9 @@ class AdapterNote(private var array: ArrayList<Note>) :
             inputTextDescription = view.findViewById(R.id.DescriptionItem)
             deleteNote = view.findViewById(R.id.deleteItem)
             itemContainer = view.findViewById(R.id.itemContainer)
-            itemContainer.setOnClickListener {
+            /*deleteNote.setOnClickListener {
                 Log.d("click item", "Вы нажали на item")
-            }
+            }*/
         }
 
         fun initNote(note: Note) {
@@ -42,8 +43,8 @@ class AdapterNote(private var array: ArrayList<Note>) :
             inputTextDescription.setText(descr)
         }
 
-        fun voidlinlayItem(): LinearLayout {
-            return itemContainer
+        fun voidlinlayItem(): Button {
+            return deleteNote
         }
     }
 
